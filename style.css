@@ -132,7 +132,17 @@ button {
   object-position: center;
   filter: brightness(1.1) saturate(1.05);
 }
-.welcome h1 { color: var(--text); font-size: 26px; margin: 0; }
+.welcome h1 {
+  margin: 0;
+  font-size: 32px;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  background: linear-gradient(135deg, #8B2FE0 0%, #5D7CFF 45%, #2FB4E8 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
 .welcome p { color: var(--text-dim); font-size: 13px; margin: 8px 0 28px; max-width: 260px; }
 .profile-form { width: 100%; max-width: 280px; text-align: left; }
 .profile-form label { display: block; color: var(--text-dim); font-size: 11px; margin: 12px 0 6px; }
