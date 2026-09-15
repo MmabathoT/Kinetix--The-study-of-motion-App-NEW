@@ -49,6 +49,7 @@
   const themeSelect = document.getElementById('themeSelect');
   const darkModeToggle = document.getElementById('darkModeToggle');
   const changePasswordBtn = document.getElementById('changePasswordBtn');
+  const logoutBtn = document.getElementById('logoutBtn');
   const passwordForm = document.getElementById('passwordForm');
   const passwordMessage = document.getElementById('passwordMessage');
   const currentPasswordInput = document.getElementById('currentPassword');
@@ -111,6 +112,21 @@
     localStorage.setItem('kinetixProfile', JSON.stringify(profile));
   }
 
+  function showApp() {
+    document.getElementById('welcome').hidden = true;
+    document.getElementById('app').hidden = false;
+  }
+
+  function showLogin() {
+    document.getElementById('welcome').hidden = false;
+    document.getElementById('app').hidden = true;
+    profileForm.hidden = true;
+    loginForm.hidden = false;
+    loginError.hidden = true;
+    welcomeCopy.textContent = 'Welcome back. Log in to continue tracking your motion.';
+    switchAuthMode.textContent = 'New to Kinetix? Create a profile';
+  }
+
   profileForm.addEventListener('submit', (event) => {
     event.preventDefault();
     profile = {
@@ -121,8 +137,8 @@
     };
     saveProfile();
     renderProfile();
-    document.getElementById('welcome').hidden = true;
-    document.getElementById('app').hidden = false;
+    localStorage.setItem('kinetixLoggedIn', 'true');
+    showApp();
   });
 
   loginForm.addEventListener('submit', (event) => {
@@ -135,8 +151,8 @@
     }
     loginError.hidden = true;
     loginForm.hidden = true;
-    document.getElementById('welcome').hidden = true;
-    document.getElementById('app').hidden = false;
+    localStorage.setItem('kinetixLoggedIn', 'true');
+    showApp();
   });
 
   switchAuthMode.addEventListener('click', () => {
@@ -197,6 +213,11 @@
     passwordForm.hidden = !opening;
     changePasswordBtn.setAttribute('aria-expanded', String(opening));
     changePasswordBtn.querySelector('.settings-chevron').textContent = opening ? '⌃' : '⌄';
+  });
+  logoutBtn.addEventListener('click', () => {
+    localStorage.removeItem('kinetixLoggedIn');
+    settingsOverlay.hidden = true;
+    showLogin();
   });
   themeSelect.addEventListener('change', applyAppearance);
   darkModeToggle.addEventListener('change', applyAppearance);
@@ -274,6 +295,7 @@
     loginForm.hidden = false;
     welcomeCopy.textContent = 'Welcome back. Log in to continue tracking your motion.';
     switchAuthMode.textContent = 'New to Kinetix? Create a profile';
+    if (localStorage.getItem('kinetixLoggedIn') === 'true') showApp();
   }
 
   // ---------- tabs ----------

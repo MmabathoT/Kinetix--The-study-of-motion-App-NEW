@@ -459,6 +459,7 @@ select:focus-visible, textarea:focus-visible {
   padding: 0;
   text-align: left;
 }
+.logout-link { color: var(--danger); }
 .settings-chevron { color: var(--text-dim); font-size: 18px; }
 .settings-field { display: block; color: var(--text-dim); font-size: 11px; margin: 10px 0 6px; }
 .settings-field span { display: block; margin-bottom: 6px; }
