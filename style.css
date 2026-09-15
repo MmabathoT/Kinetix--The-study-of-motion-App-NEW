@@ -415,12 +415,27 @@ select:focus-visible, textarea:focus-visible {
   padding: 18px;
 }
 .settings-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
-.settings-head h2 { color: var(--text); font-size: 19px; margin: 0; }
+.settings-head h2 {
+  background: linear-gradient(135deg, #8B2FE0 0%, #5D7CFF 45%, #2FB4E8 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  font-size: 19px;
+  margin: 0;
+}
 .settings-head .sub { margin-top: 4px; }
 .icon-close { background: none; border: none; color: var(--text-dim); font-size: 25px; line-height: 1; padding: 0 2px; }
 .settings-tabs { display: flex; gap: 6px; overflow-x: auto; border-bottom: 1px solid var(--line); margin-top: 16px; }
 .settings-tab { flex-shrink: 0; background: none; border: none; border-bottom: 2px solid transparent; color: var(--text-dim); font: inherit; font-size: 11px; padding: 9px 6px 8px; }
-.settings-tab.active { border-bottom-color: var(--blue); color: var(--text); }
+.settings-tab.active {
+  background: linear-gradient(135deg, #8B2FE0 0%, #5D7CFF 45%, #2FB4E8 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  border-bottom-color: var(--blue);
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
 .settings-pane { min-height: 220px; }
 .settings-section { border-top: 1px solid var(--line); margin-top: 16px; padding-top: 14px; }
 .settings-section h3 { color: var(--text); font-size: 13px; margin: 0 0 12px; }
