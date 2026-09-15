@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Kinetix</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- one-screen welcome, shown once per session -->
+  <div class="welcome" id="welcome">
+    <div class="logo-mark">
+      <img src="Kinetix%20Logo%20running.png" alt="Kinetix running logo">
+    </div>
+    <h1>Kinetix</h1>
+    <p id="welcomeCopy">Create your profile to start tracking every workout.</p>
+    <form class="profile-form" id="profileForm">
+      <label for="profileName">Your name</label>
+      <input id="profileName" name="name" type="text" placeholder="e.g. Naledi Mahlangu" autocomplete="name" required>
+      <label for="profileEmail">Email address</label>
+      <input id="profileEmail" name="email" type="email" placeholder="e.g. naledi@example.com" autocomplete="email" required>
+      <label for="profilePassword">Create a password</label>
+      <input id="profilePassword" name="password" type="password" placeholder="At least 8 characters" autocomplete="new-password" minlength="8" required>
+      <button type="submit" id="getStartedBtn">Create profile</button>
+    </form>
+    <form class="profile-form login-form" id="loginForm" hidden>
+      <label for="loginEmail">Email address</label>
+      <input id="loginEmail" type="email" placeholder="e.g. naledi@example.com" autocomplete="email" required>
+      <label for="loginPassword">Password</label>
+      <input id="loginPassword" type="password" placeholder="Your password" autocomplete="current-password" required>
+      <p class="form-error" id="loginError" role="alert" hidden>Incorrect email or password.</p>
+      <button type="submit">Log in</button>
+    </form>
+    <button class="welcome-switch" id="switchAuthMode" type="button">Log in</button>
+  </div>
+
+  <main class="app" id="app" hidden>
+
+    <!-- FEED -->
+    <section class="screen" id="screen-feed">
+      <header class="screen-head">
+        <div>
+          <h2>Kinetix</h2>
+          <p class="sub">Your crew, this week</p>
+        </div>
+        <div class="avatar"></div>
+      </header>
+
+      <div class="stat-row">
+        <div class="stat-card"><span class="label">This week</span><span class="value">47.2 km</span></div>
+        <div class="stat-card"><span class="label">Activities</span><span class="value">5</span></div>
+        <div class="stat-card"><span class="label">Streak</span><span class="value">6 days</span></div>
+      </div>
+
+      <div class="feed-list" id="feedList"></div>
+    </section>
+
+    <!-- RECORD -->
+    <section class="screen" id="screen-record" hidden>
+      <header class="screen-head">
+        <div>
+          <h2>Record</h2>
+          <p class="sub" id="recordSub">Pick a sport and hit start</p>
+        </div>
+      </header>
+
+      <div class="sport-picker" id="sportPicker"></div>
+
+      <div class="map-card">
+        <svg id="routeSvg" viewBox="0 0 200 90" preserveAspectRatio="none">
+          <defs>
+            <linearGradient id="routeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#8B2FE0" />
+              <stop offset="100%" stop-color="#2FB4E8" />
+            </linearGradient>
+          </defs>
+          <rect x="0" y="0" width="200" height="90" fill="#1D1C29" />
+          <path id="routePath" d="M10,70 Q40,20 70,55 T130,40 T190,60" fill="none"
+                stroke="url(#routeGrad)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"
+                stroke-dasharray="1000" stroke-dashoffset="1000" />
+        </svg>
+        <span class="gps-pill" id="gpsPill" hidden>GPS locked · ±4m</span>
+      </div>
+
+      <div class="stat-trio">
+        <div><span class="label">Time</span><span class="big" id="statTime">00:00</span></div>
+        <div><span class="label">Distance (km)</span><span class="big" id="statDistance">0.00</span></div>
+        <div><span class="label">Pace (min/km)</span><span class="big" id="statPace">0.00</span></div>
+      </div>
+
+      <div class="controls" id="controls">
+        <button class="btn-round btn-start" id="startBtn">▶</button>
+      </div>
+
+      <!-- shown after Stop -->
+      <div class="summary" id="summary" hidden>
+        <h3>Nice work — activity saved</h3>
+        <div class="summary-grid">
+          <div><span class="label">Distance</span><span class="value" id="sumDistance">—</span></div>
+          <div><span class="label">Time</span><span class="value" id="sumTime">—</span></div>
+          <div><span class="label">Pace</span><span class="value" id="sumPace">—</span></div>
+          <div><span class="label">Calories</span><span class="value" id="sumCal">—</span></div>
+        </div>
+        <button class="btn-outline" id="shareBtn">📷 Create shareable card</button>
+        <button class="btn-primary" id="doneBtn">Done</button>
+      </div>
+    </section>
+
+    <!-- HISTORY -->
+    <section class="screen" id="screen-history" hidden>
+      <header class="screen-head">
+        <div>
+          <h2>History</h2>
+          <p class="sub">Every activity, kept and searchable</p>
+        </div>
+      </header>
+      <div class="history-list" id="historyList"></div>
+    </section>
+
+    <!-- PROFILE -->
+    <section class="screen" id="screen-profile" hidden>
+      <div class="profile-head">
+        <div class="avatar avatar-lg" id="profileAvatar"></div>
+        <label class="avatar-upload" for="profilePicture">Upload profile picture</label>
+        <input id="profilePicture" type="file" accept="image/*" hidden>
+        <h2 id="profileNameDisplay">Your profile</h2>
+        <p class="sub" id="profileLocationDisplay">Add your location</p>
+        <form class="profile-location-form" id="profileLocationForm">
+          <label for="profileLocation">Location</label>
+          <div>
+            <input id="profileLocation" type="text" placeholder="e.g. Johannesburg, South Africa" autocomplete="address-level2">
+            <button class="btn-outline" type="submit">Save</button>
+          </div>
+        </form>
+        <div class="profile-counts">
+          <div><span class="value">0</span><span class="label">Followers</span></div>
+          <div><span class="value">0</span><span class="label">Following</span></div>
+          <div><span class="value" id="profileActivities">0</span><span class="label">Activities</span></div>
+        </div>
+      </div>
+      <div class="stat-grid">
+        <div class="stat-card"><span class="label">Total distance</span><span class="value" id="profileDistance">0 km</span></div>
+        <div class="stat-card"><span class="label">Calories YTD</span><span class="value" id="profileCalories">0</span></div>
+        <div class="stat-card"><span class="label">Badges</span><span class="value">0</span></div>
+        <div class="stat-card"><span class="label">Clubs</span><span class="value">0</span></div>
+      </div>
+      <button class="btn-outline full" id="settingsBtn">Settings</button>
+    </section>
+
+    <nav class="tabbar">
+      <button class="tab active" data-tab="feed">🏠<span>Feed</span></button>
+      <button class="tab" data-tab="record">➕<span>Record</span></button>
+      <button class="tab" data-tab="history">🕘<span>History</span></button>
+      <button class="tab" data-tab="profile">👤<span>Profile</span></button>
+    </nav>
+  </main>
+
+  <!-- share card overlay -->
+  <div class="overlay" id="shareOverlay" hidden>
+    <div class="share-card">
+      <div class="share-card-top" id="shareCardTop">
+        <p class="brand">Kinetix</p>
+        <p class="headline" id="shareHeadline">0.00 km run</p>
+        <p class="subline" id="shareSubline">00:00 · 0.00 /km</p>
+      </div>
+      <div class="share-card-actions">
+        <button class="btn-outline" id="shareCloseBtn">Close</button>
+        <button class="btn-primary" id="shareSaveBtn">✓ Save image</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="overlay" id="settingsOverlay" hidden>
+    <section class="settings-card" aria-labelledby="settingsTitle">
+      <div class="settings-head">
+        <div>
+          <h2 id="settingsTitle">Settings</h2>
+          <p class="sub">Personalise Kinetix and manage your account.</p>
+        </div>
+        <button class="icon-close" id="settingsCloseBtn" type="button" aria-label="Close settings">×</button>
+      </div>
+      <nav class="settings-tabs" aria-label="Settings sections">
+        <button class="settings-tab active" data-settings-tab="profile" type="button">Profile</button>
+        <button class="settings-tab" data-settings-tab="app" type="button">App</button>
+        <button class="settings-tab" data-settings-tab="legal" type="button">Legal</button>
+        <button class="settings-tab" data-settings-tab="privacy" type="button">Privacy</button>
+        <button class="settings-tab" data-settings-tab="contact" type="button">Contact</button>
+      </nav>
+      <section class="settings-pane active" id="settings-profile-pane">
+        <div class="settings-section">
+          <button class="settings-option" id="editProfileBtn" type="button" aria-expanded="false">
+            <span>Edit profile</span>
+            <span class="settings-chevron" aria-hidden="true">⌄</span>
+          </button>
+        </div>
+        <form class="settings-section profile-edit-form" id="settingsProfileForm" hidden>
+          <h3>Edit profile</h3>
+          <label class="settings-field" for="settingsName">Name</label>
+          <input id="settingsName" type="text" required>
+          <label class="settings-field" for="settingsEmail">Email</label>
+          <input id="settingsEmail" type="email" required>
+          <label class="settings-field" for="settingsLocation">Location</label>
+          <input id="settingsLocation" type="text" placeholder="e.g. Johannesburg, South Africa">
+          <label class="avatar-upload settings-upload" for="profilePicture">Change profile picture</label>
+          <p class="form-message" id="profileMessage" role="status" hidden></p>
+          <button class="btn-primary full" type="submit">Save profile</button>
+        </form>
+        <div class="settings-section">
+          <button class="settings-option" id="changePasswordBtn" type="button" aria-expanded="false">
+            <span>Change password</span>
+            <span class="settings-chevron" aria-hidden="true">⌄</span>
+          </button>
+        </div>
+        <form class="settings-section password-form" id="passwordForm" hidden>
+          <h3>Change password</h3>
+          <label class="settings-field" for="currentPassword">Current password</label>
+          <input id="currentPassword" type="password" autocomplete="current-password" required>
+          <label class="settings-field" for="newPassword">New password</label>
+          <input id="newPassword" type="password" minlength="8" autocomplete="new-password" required>
+          <label class="settings-field" for="confirmPassword">Confirm new password</label>
+          <input id="confirmPassword" type="password" minlength="8" autocomplete="new-password" required>
+          <p class="form-message" id="passwordMessage" role="status" hidden></p>
+          <button class="btn-primary full" type="submit">Update password</button>
+        </form>
+      </section>
+      <section class="settings-pane" id="settings-app-pane" hidden>
+        <div class="settings-section">
+          <h3>Appearance</h3>
+          <label class="settings-field" for="themeSelect"><span>Theme</span>
+            <select id="themeSelect"><option value="kinetix">Kinetix</option><option value="midnight">Midnight</option><option value="light">Light</option></select>
+          </label>
+          <label class="toggle-row" for="darkModeToggle"><span>Dark mode</span><input id="darkModeToggle" type="checkbox" checked></label>
+        </div>
+        <div class="settings-section notification-list">
+          <h3>Notifications</h3>
+          <label class="toggle-row" for="emailNotifications"><span>Email notifications</span><input id="emailNotifications" type="checkbox"></label>
+          <label class="toggle-row" for="pushNotifications"><span>Push notifications</span><input id="pushNotifications" type="checkbox"></label>
+          <label class="toggle-row" for="smsNotifications"><span>SMS notifications</span><input id="smsNotifications" type="checkbox"></label>
+          <label class="toggle-row" for="kinetixNotifications"><span>Kinetix notifications</span><input id="kinetixNotifications" type="checkbox" checked></label>
+        </div>
+      </section>
+      <section class="settings-pane" id="settings-legal-pane" hidden>
+        <div class="settings-section info-copy"><h3>Terms of use</h3><p>Kinetix helps you record and review movement. Use the app responsibly and make sure you are fit for the activity you choose.</p><h3>Health disclaimer</h3><p>Kinetix is not medical advice. Stop exercising if you feel unwell and consult a qualified professional about health concerns.</p></div>
+      </section>
+      <section class="settings-pane" id="settings-privacy-pane" hidden>
+        <div class="settings-section info-copy"><h3>Your data</h3><p>This version stores your profile, preferences, picture, and activity data in this browser only. There is no online account server connected yet.</p><h3>Your choices</h3><p>You can change your profile details, notification preferences, password, or clear browser site data at any time.</p></div>
+      </section>
+      <section class="settings-pane" id="settings-contact-pane" hidden>
+        <form class="settings-section" id="contactForm"><h3>Contact us</h3><p class="info-copy">Need help or want to share feedback? Send a message to the Kinetix team.</p><label class="settings-field" for="contactSubject">Subject</label><input id="contactSubject" type="text" required><label class="settings-field" for="contactMessage">Message</label><textarea id="contactMessage" rows="4" required></textarea><p class="form-message" id="contactFeedback" role="status" hidden></p><button class="btn-primary full" type="submit">Send message</button></form></section>
+    </section>
+  </div>
+
+<script src="script.js"></script>
+</body>
+</html>
