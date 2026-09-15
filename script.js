@@ -229,10 +229,20 @@
   });
   contactForm.addEventListener('submit', (event) => {
     event.preventDefault();
-    contactFeedback.textContent = 'Thanks. Your message has been prepared for the Kinetix team.';
+    const subject = document.getElementById('contactSubject').value.trim();
+    const message = document.getElementById('contactMessage').value.trim();
+    const senderDetails = [
+      profile.name && `Name: ${profile.name}`,
+      profile.email && `Email: ${profile.email}`,
+      profile.location && `Location: ${profile.location}`,
+    ].filter(Boolean).join('\n');
+    const body = senderDetails ? `${message}\n\n${senderDetails}` : message;
+    const mailtoUrl = `mailto:infokinetix@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+    window.location.href = mailtoUrl;
+    contactFeedback.textContent = 'Your email app is opening with this message addressed to the Kinetix team.';
     contactFeedback.className = 'form-message success';
     contactFeedback.hidden = false;
-    contactForm.reset();
   });
   passwordForm.addEventListener('submit', (event) => {
     event.preventDefault();
