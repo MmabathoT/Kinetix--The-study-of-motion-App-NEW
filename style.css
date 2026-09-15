@@ -144,7 +144,7 @@ button {
   -webkit-text-fill-color: transparent;
 }
 .welcome p { color: var(--text-dim); font-size: 13px; margin: 8px 0 28px; max-width: 260px; }
-.profile-form { width: 100%; max-width: 280px; text-align: left; }
+.profile-form { width: 100%; max-width: 280px; text-align: left; display: flex; flex-direction: column; }
 .profile-form label { display: block; color: var(--text-dim); font-size: 11px; margin: 12px 0 6px; }
 .profile-form label span { opacity: 0.7; }
 .profile-form input {
@@ -167,6 +167,7 @@ button {
   border: none;
   border-radius: 999px;
   padding: 14px 32px;
+  margin-top: 16px;
   font-size: 14px;
   font-weight: 600;
 }
