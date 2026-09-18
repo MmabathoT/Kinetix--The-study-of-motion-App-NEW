@@ -137,7 +137,7 @@
     };
     saveProfile();
     renderProfile();
-    localStorage.setItem('kinetixLoggedIn', 'true');
+    sessionStorage.setItem('kinetixLoggedIn', 'true');
     showApp();
   });
 
@@ -151,7 +151,7 @@
     }
     loginError.hidden = true;
     loginForm.hidden = true;
-    localStorage.setItem('kinetixLoggedIn', 'true');
+    sessionStorage.setItem('kinetixLoggedIn', 'true');
     showApp();
   });
 
@@ -215,7 +215,7 @@
     changePasswordBtn.querySelector('.settings-chevron').textContent = opening ? '⌃' : '⌄';
   });
   logoutBtn.addEventListener('click', () => {
-    localStorage.removeItem('kinetixLoggedIn');
+    sessionStorage.removeItem('kinetixLoggedIn');
     settingsOverlay.hidden = true;
     showLogin();
   });
@@ -295,7 +295,7 @@
     loginForm.hidden = false;
     welcomeCopy.textContent = 'Welcome back. Log in to continue tracking your motion.';
     switchAuthMode.textContent = 'New to Kinetix? Create a profile';
-    if (localStorage.getItem('kinetixLoggedIn') === 'true') showApp();
+    if (sessionStorage.getItem('kinetixLoggedIn') === 'true') showApp();
   }
 
   // ---------- tabs ----------
