@@ -18,6 +18,44 @@ execution policy. The browser runs this as-is.
 
 No terminal commands required for either option.
 
+## Packaging for Android and iOS
+The app can be packaged with Capacitor while keeping the existing plain
+HTML/CSS/JavaScript code.
+
+### Android on Windows
+Install Node.js (already installed if `npm --version` works), Android Studio,
+and a JDK 17 or newer. In this folder run:
+
+```powershell
+npm install
+npx cap add android
+npm run copy:web
+npx cap open android
+```
+
+Build the signed release in Android Studio, then upload the generated Android
+App Bundle (`.aab`) to Google Play Console.
+
+### iPhone and iPad
+iOS apps must be built and signed with Xcode on macOS. Copy this folder to a Mac,
+install Xcode and CocoaPods, then run:
+
+```bash
+npm install
+npx cap add ios
+npm run copy:web
+npx cap open ios
+```
+
+In Xcode, select an Apple Developer team, configure the bundle identifier,
+archive the app, and submit it to App Store Connect. A cloud Mac build service
+is an alternative if you do not have access to a Mac.
+
+### Optional VS Code extension
+No special extension is required. The **Live Server** extension is useful for
+browser development, while Android Studio and Xcode provide the native build
+tools.
+
 ## What's included
 - **Feed** — a social scroll of friends' activities with distance/time/pace and kudos/comments
 - **Record** — pick a sport, start/pause/stop, a simulated live GPS route and timer
