@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="referrer" content="no-referrer">
+  <meta name="theme-color" content="#f4f6f3">
+  <title>Kinetix live location</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+  <link rel="stylesheet" href="/live-viewer.css">
+</head>
+<body>
+  <main class="live-page">
+    <header class="live-header">
+      <a class="live-brand-link" href="/" aria-label="Go to the Kinetix home feed">
+        <div class="live-brand"><img src="/assets/icon-only.png" alt="Kinetix logo"><span>Kinetix</span></div>
+      </a>
+      <div class="live-heading">
+        <div>
+          <p class="eyebrow">LIVE ACTIVITY</p>
+          <h1 id="sportName">Waiting for location</h1>
+        </div>
+        <span class="live-status" id="liveStatus"><span class="status-dot"></span>Connecting</span>
+      </div>
+      <p class="live-updated" id="liveUpdated">Waiting for the runner’s first location update.</p>
+    </header>
+    <section class="map-panel" aria-label="Live activity map">
+      <div id="liveMap" role="application" aria-label="Map showing the runner’s live location"></div>
+      <p class="map-fallback" id="mapFallback" hidden>The map needs an internet connection. The latest coordinates are shown below.</p>
+    </section>
+    <footer class="live-footer">
+      <span id="liveCoordinates">Location has not arrived yet.</span>
+      <span>Only people with this private link can view this activity.</span>
+    </footer>
+  </main>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <script src="/live-viewer.js" defer></script>
+</body>
+</html>

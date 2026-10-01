@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -44,7 +44,12 @@
     <section class="screen" id="screen-feed">
       <header class="screen-head">
         <div>
-          <h2>Kinetix</h2>
+          <div class="screen-brand-line">
+            <a class="brand-home-link" href="#feed" aria-label="Go to home feed">
+              <img class="screen-brand-icon" src="assets/icon-only.png" alt="Kinetix home">
+            </a>
+            <button class="home-link" type="button" aria-label="Go to home feed">Kinetix</button>
+          </div>
           <p class="sub">Your crew, this week</p>
         </div>
         <div class="avatar"></div>
@@ -63,10 +68,34 @@
     <section class="screen" id="screen-record" hidden>
       <header class="screen-head">
         <div>
-          <h2>Record</h2>
+          <div class="screen-brand-line">
+            <a class="brand-home-link" href="#feed" aria-label="Go to home feed">
+              <img class="screen-brand-icon" src="assets/icon-only.png" alt="Kinetix home">
+            </a>
+            <button class="home-link" type="button" aria-label="Go to home feed from Record">Record</button>
+          </div>
           <p class="sub" id="recordSub">Pick a sport and hit start</p>
         </div>
       </header>
+
+      <section class="live-location-panel" aria-labelledby="liveLocationTitle">
+        <div class="live-location-heading">
+          <div>
+            <h3 id="liveLocationTitle">Live location</h3>
+            <p>Keep Kinetix open to share your location and private map link.</p>
+          </div>
+          <label class="live-location-toggle" for="liveLocationToggle">
+            <input id="liveLocationToggle" type="checkbox">
+            <span>Share</span>
+          </label>
+        </div>
+        <p class="form-message" id="liveLocationStatus" role="status" aria-live="polite">Only people with your link can see your live location.</p>
+        <div class="live-share-actions" id="liveShareActions" hidden>
+          <input id="liveShareUrl" type="url" readonly aria-label="Live location sharing link">
+          <button class="btn-outline" id="shareLiveLinkBtn" type="button" disabled>Share link</button>
+          <button class="btn-outline" id="stopLiveShareBtn" type="button" hidden>Stop sharing</button>
+        </div>
+      </section>
 
       <div class="sport-picker" id="sportPicker"></div>
 
@@ -114,22 +143,51 @@
     <section class="screen" id="screen-history" hidden>
       <header class="screen-head">
         <div>
-          <h2>History</h2>
+          <div class="screen-brand-line">
+            <a class="brand-home-link" href="#feed" aria-label="Go to home feed">
+              <img class="screen-brand-icon" src="assets/icon-only.png" alt="Kinetix home">
+            </a>
+            <button class="home-link" type="button" aria-label="Go to home feed from History">History</button>
+          </div>
           <p class="sub">Every activity, kept and searchable</p>
         </div>
       </header>
+      <div class="sport-folder-grid" id="historySportFolders" role="group" aria-label="Activity folders"></div>
+      <h3 class="folder-view-title" id="historyFolderTitle">All activities</h3>
+      <p class="history-empty" id="historyEmpty" hidden></p>
       <div class="history-list" id="historyList"></div>
     </section>
 
     <!-- PROFILE -->
     <section class="screen" id="screen-profile" hidden>
+      <header class="screen-head home-header">
+        <div class="screen-brand-line">
+          <a class="brand-home-link" href="#feed" aria-label="Go to home feed">
+            <img class="screen-brand-icon" src="assets/icon-only.png" alt="Kinetix home">
+          </a>
+          <button class="home-link" type="button" aria-label="Go to home feed">Kinetix</button>
+        </div>
+        <div class="avatar"></div>
+      </header>
       <div class="profile-head">
         <div class="avatar avatar-lg" id="profileAvatar"></div>
         <label class="avatar-upload" for="profilePicture">Upload profile picture</label>
         <input id="profilePicture" type="file" accept="image/*" hidden>
-        <h2 id="profileNameDisplay">Your profile</h2>
-        <p class="sub" id="profileLocationDisplay">Add your location</p>
-        <form class="profile-location-form" id="profileLocationForm">
+        <div class="profile-name-row" id="profileNameRow">
+          <h2 id="profileNameDisplay">Your profile</h2>
+          <button class="quick-edit-name" id="quickEditNameBtn" type="button" aria-label="Edit profile name" title="Edit profile name">✎</button>
+        </div>
+        <form class="profile-location-form quick-name-form" id="quickNameForm" hidden>
+          <label for="quickProfileName">Profile name</label>
+          <div>
+            <input id="quickProfileName" type="text" maxlength="40" autocomplete="name" required>
+            <button class="btn-primary" type="submit">Save</button>
+            <button class="btn-outline" id="cancelQuickNameBtn" type="button">Cancel</button>
+          </div>
+          <p class="form-message" id="quickNameMessage" role="status" hidden></p>
+        </form>
+        <button class="sub profile-location-toggle" id="profileLocationDisplay" type="button" aria-expanded="false" aria-controls="profileLocationForm">Add your location</button>
+        <form class="profile-location-form" id="profileLocationForm" hidden>
           <label for="profileLocation">Location</label>
           <div>
             <input id="profileLocation" type="text" placeholder="e.g. Johannesburg, South Africa" autocomplete="address-level2">
@@ -151,27 +209,109 @@
       <button class="btn-outline full" id="settingsBtn">Settings</button>
     </section>
 
+    <!-- GALLERY -->
+    <section class="screen" id="screen-gallery" hidden>
+      <header class="screen-head">
+        <div>
+          <div class="gallery-name-row" id="galleryNameRow">
+            <a class="brand-home-link" href="#feed" aria-label="Go to home feed">
+              <img class="screen-brand-icon" src="assets/icon-only.png" alt="Kinetix home">
+            </a>
+            <button class="home-link" id="galleryHeading" type="button" aria-label="Go to home feed from Gallery">Gallery</button>
+            <button class="quick-edit-name" id="editGalleryNameBtn" type="button" aria-label="Edit Gallery name" title="Edit Gallery name" aria-expanded="false" aria-controls="galleryNameForm">✎</button>
+          </div>
+          <p class="sub">Your saved activity images</p>
+        </div>
+      </header>
+      <form class="gallery-name-form" id="galleryNameForm" hidden>
+        <label for="galleryNameInput">Gallery name</label>
+        <div>
+          <input id="galleryNameInput" type="text" maxlength="36" placeholder="e.g. Miles & Memories">
+          <button class="btn-outline" type="submit">Save name</button>
+          <button class="btn-outline" id="cancelGalleryNameBtn" type="button">Cancel</button>
+        </div>
+      </form>
+      <div class="sport-folder-grid gallery-sport-folders" id="gallerySportFolders" role="group" aria-label="Photo folders"></div>
+      <h3 class="folder-view-title" id="galleryFolderTitle">All images</h3>
+      <p class="form-message" id="galleryMessage" role="status" aria-live="polite" hidden></p>
+      <p class="gallery-empty" id="galleryEmpty">Your saved images will appear here.</p>
+      <div id="galleryList"></div>
+    </section>
+
     <nav class="tabbar">
       <button class="tab active" data-tab="feed">🏠<span>Feed</span></button>
       <button class="tab" data-tab="record">➕<span>Record</span></button>
       <button class="tab" data-tab="history">🕘<span>History</span></button>
       <button class="tab" data-tab="profile">👤<span>Profile</span></button>
+      <button class="tab" data-tab="gallery">🖼️<span>Gallery</span></button>
     </nav>
   </main>
 
   <!-- share card overlay -->
   <div class="overlay" id="shareOverlay" hidden>
-    <div class="share-card">
-      <div class="share-card-top" id="shareCardTop">
-        <p class="brand">Kinetix</p>
-        <p class="headline" id="shareHeadline">0.00 km run</p>
-        <p class="subline" id="shareSubline">00:00 · 0.00 /km</p>
-      </div>
+    <section class="share-card" role="dialog" aria-modal="true" aria-labelledby="shareDialogTitle">
+      <h2 class="sr-only" id="shareDialogTitle">Share activity image</h2>
+      <img class="share-preview" id="sharePreview" alt="Kinetix activity share image" hidden>
+      <p class="form-message" id="shareMessage" role="status" aria-live="polite" hidden></p>
       <div class="share-card-actions">
-        <button class="btn-outline" id="shareCloseBtn">Close</button>
-        <button class="btn-primary" id="shareSaveBtn">✓ Save image</button>
+        <button class="btn-outline" id="shareCloseBtn" type="button">Close</button>
+        <button class="btn-outline" id="shareDownloadBtn" type="button">Download image</button>
+        <button class="btn-outline" id="shareSaveBtn" type="button">Save to Gallery</button>
+        <button class="btn-primary" id="shareSystemBtn" type="button">Share image</button>
       </div>
-    </div>
+    </section>
+  </div>
+
+  <div class="overlay" id="historyDetailOverlay" hidden>
+    <section class="history-detail" role="dialog" aria-modal="true" aria-labelledby="historyDetailTitle">
+      <header class="history-detail-head">
+        <div>
+          <h2 id="historyDetailTitle">Activity</h2>
+          <p class="sub" id="historyDetailDate"></p>
+        </div>
+        <button class="icon-close" id="historyDetailClose" type="button" aria-label="Close activity details">×</button>
+      </header>
+      <div class="history-detail-grid">
+        <div><span class="label">Distance</span><strong class="value" id="historyDetailDistance"></strong></div>
+        <div><span class="label">Duration</span><strong class="value" id="historyDetailDuration"></strong></div>
+        <div><span class="label">Pace</span><strong class="value" id="historyDetailPace"></strong></div>
+        <div><span class="label">Calories</span><strong class="value" id="historyDetailCalories"></strong></div>
+      </div>
+    </section>
+  </div>
+
+  <div class="overlay" id="addSportOverlay" hidden>
+    <section class="history-detail add-sport-card" role="dialog" aria-modal="true" aria-labelledby="addSportTitle">
+      <header class="history-detail-head">
+        <div>
+          <h2 id="addSportTitle">Add a sport</h2>
+          <p class="sub">Make a tab for the activity you enjoy.</p>
+        </div>
+        <button class="icon-close" id="addSportClose" type="button" aria-label="Close add sport dialog">×</button>
+      </header>
+      <form id="addSportForm">
+        <label class="settings-field" for="customSportName">Sport name</label>
+        <input id="customSportName" type="text" maxlength="24" placeholder="e.g. Basketball" required>
+        <label class="settings-field" for="customSportIcon">Icon</label>
+        <select id="customSportIcon">
+          <option value="🏀">🏀 Basketball</option>
+          <option value="⚽">⚽ Soccer</option>
+          <option value="🏸">🏸 Badminton</option>
+          <option value="🏓">🏓 Table tennis</option>
+          <option value="🏐">🏐 Volleyball</option>
+          <option value="🥊">🥊 Boxing</option>
+          <option value="🧘">🧘 Yoga</option>
+          <option value="💃">💃 Dance</option>
+          <option value="🛹">🛹 Skateboarding</option>
+          <option value="🏅">🏅 Other</option>
+        </select>
+        <p class="form-message" id="addSportMessage" role="status" hidden></p>
+        <div class="add-sport-actions">
+          <button class="btn-outline" id="addSportCancel" type="button">Cancel</button>
+          <button class="btn-primary" type="submit">Add sport</button>
+        </div>
+      </form>
+    </section>
   </div>
 
   <div class="overlay" id="settingsOverlay" hidden>
@@ -233,6 +373,14 @@
         </form>
       </section>
       <section class="settings-pane" id="settings-app-pane" hidden>
+        <form class="settings-section" id="liveServerForm">
+          <h3>Live location server</h3>
+          <p class="info-copy">Enter the public HTTPS address hosting Kinetix live sharing. Leave blank to use the current website server.</p>
+          <label class="settings-field" for="liveServerUrl">Server address</label>
+          <input id="liveServerUrl" type="url" placeholder="https://kinetix.example.com" autocomplete="url">
+          <p class="form-message" id="liveServerMessage" role="status" aria-live="polite" hidden></p>
+          <button class="btn-outline full" type="submit">Save server address</button>
+        </form>
         <div class="settings-section">
           <h3>Appearance</h3>
           <label class="settings-field" for="themeSelect"><span>Theme</span>
@@ -252,13 +400,14 @@
         <div class="settings-section info-copy"><h3>Terms of use</h3><p>Kinetix helps you record and review movement. Use the app responsibly and make sure you are fit for the activity you choose.</p><h3>Health disclaimer</h3><p>Kinetix is not medical advice. Stop exercising if you feel unwell and consult a qualified professional about health concerns.</p></div>
       </section>
       <section class="settings-pane" id="settings-privacy-pane" hidden>
-        <div class="settings-section info-copy"><h3>Your data</h3><p>This version stores your profile, preferences, picture, and activity data in this browser only. There is no online account server connected yet.</p><h3>Your choices</h3><p>You can change your profile details, notification preferences, password, or clear browser site data at any time.</p></div>
+        <div class="settings-section info-copy"><h3>Your data</h3><p>Your profile, preferences, picture, and activity history stay on this device. If you enable live sharing, current GPS coordinates are sent to the configured live server and held in memory for up to two hours. Anyone with the private link can view the live location until sharing stops or the link expires. Keep Kinetix open while sharing; background location service is not included.</p><h3>Your choices</h3><p>Live sharing is optional. Stop it at any time from Record. You can also change your profile details, notification preferences, password, or clear browser site data.</p></div>
       </section>
       <section class="settings-pane" id="settings-contact-pane" hidden>
         <form class="settings-section" id="contactForm"><h3>Contact us</h3><p class="info-copy">Need help or want to share feedback? Send a message to the Kinetix team.</p><label class="settings-field" for="contactSubject">Subject</label><input id="contactSubject" type="text" required><label class="settings-field" for="contactMessage">Message</label><textarea id="contactMessage" rows="4" required></textarea><p class="form-message" id="contactFeedback" role="status" hidden></p><button class="btn-primary full" type="submit">Send message</button></form></section>
     </section>
   </div>
 
+<script src="live-share.js"></script>
 <script src="script.js"></script>
 </body>
 </html>

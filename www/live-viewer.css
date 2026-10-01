@@ -1,0 +1,35 @@
+:root {
+  color-scheme: light;
+  font-family: "Aptos", "Segoe UI", sans-serif;
+  color: #16231f;
+  background: #f4f6f3;
+}
+
+* { box-sizing: border-box; }
+html, body { width: 100%; min-height: 100%; margin: 0; }
+body { min-height: 100vh; min-height: 100dvh; }
+.live-page { display: flex; flex-direction: column; min-height: 100vh; min-height: 100dvh; }
+.live-header { padding: 18px clamp(16px, 4vw, 48px) 14px; background: #fff; border-bottom: 1px solid #dfe6e0; }
+.live-brand-link { display: inline-flex; align-items: center; color: #263b33; text-decoration: none; border-radius: 8px; }
+.live-brand-link:focus-visible { outline: 2px solid #1a2d24; outline-offset: 4px; }
+.live-brand { display: flex; align-items: center; gap: 8px; color: inherit; font-size: 13px; font-weight: 700; }
+.live-brand img { width: 26px; height: 26px; object-fit: contain; }
+.live-heading { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-top: 14px; }
+.eyebrow { margin: 0 0 4px; color: #557064; font-size: 10px; font-weight: 700; }
+h1 { margin: 0; font-size: clamp(18px, 4vw, 24px); font-weight: 650; }
+.live-status { display: inline-flex; align-items: center; gap: 7px; flex-shrink: 0; color: #385b4b; font-size: 12px; font-weight: 600; }
+.status-dot { width: 8px; height: 8px; border-radius: 50%; background: #8b9a91; }
+.live-status.active .status-dot { background: #169b67; box-shadow: 0 0 0 4px #169b6720; }
+.live-status.ended .status-dot { background: #a74e43; }
+.live-updated { margin: 6px 0 0; color: #64746b; font-size: 12px; }
+.map-panel { position: relative; flex: 1; min-height: 320px; background: #e8eee9; }
+#liveMap { position: absolute; inset: 0; }
+.map-fallback { position: absolute; z-index: 500; right: 12px; bottom: 12px; left: 12px; margin: 0; padding: 12px; border: 1px solid #dfe6e0; border-radius: 6px; background: #fff; color: #384a41; font-size: 12px; }
+.live-footer { display: flex; justify-content: space-between; gap: 12px; padding: 12px clamp(16px, 4vw, 48px); background: #fff; color: #64746b; font-size: 11px; }
+.live-footer span { min-width: 0; }
+@media (max-width: 560px) {
+  .live-header { padding-top: max(14px, env(safe-area-inset-top)); }
+  .live-heading { align-items: flex-start; flex-direction: column; gap: 8px; }
+  .map-panel { min-height: 50vh; min-height: 50dvh; }
+  .live-footer { flex-direction: column; padding-bottom: max(12px, env(safe-area-inset-bottom)); }
+}

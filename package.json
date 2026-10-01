@@ -4,6 +4,7 @@
   "private": true,
   "description": "Kinetix fitness tracking app",
   "scripts": {
+    "start": "node server.js",
     "copy:web": "node scripts/copy-web.js && npx cap copy",
     "open:android": "npx cap open android",
     "open:ios": "npx cap open ios"
@@ -11,7 +12,8 @@
   "dependencies": {
     "@capacitor/android": "latest",
     "@capacitor/core": "latest",
-    "@capacitor/ios": "latest"
+    "@capacitor/ios": "latest",
+    "ws": "^8.21.3"
   },
   "devDependencies": {
     "@capacitor/cli": "latest"
